@@ -110,6 +110,13 @@ h1 {
     background-color: #e0e0e0;
 }
 
+.warning-message {
+    display: none;
+    color: #4894f0;
+    font-weight: bold;
+    padding: 5px;
+}
+
 /* Textarea for User Input */
 textarea {
     width: 100%;

@@ -29,8 +29,14 @@ function updateCharToImageMapping(baseUrl) {
 // Function to handle the selection of a grid item
 function handleGridItemClick(item) {
     const imgElement = item.querySelector('img');
+    const warningMessage = document.getElementById('warning-message');
+
     if (imgElement && imgElement.src) {
         const baseUrl = imgElement.src.split('unown-a.png')[0];
+
+        if(baseUrl.includes('/crystal/')) warningMessage.style.display = "block";
+        else warningMessage.style.display = "none";
+
         updateCharToImageMapping(baseUrl);
     }
 }
