@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Unown Image Generator</title>
+    <meta property="og:url" content="https://jihunkimcode.github.io/Unown-Image-Generator/">
+    <meta property="og:title" content="Unown Image Generator">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://img.pokemondb.net/sprites/home/normal/unown-a.png">
+    <meta property="og:description" content="A webpage for generating Unown text image">
+    <meta name="author" content="Jihun Kim">
+    <meta name="keywords" content="Unown">
+    <meta name="description" content="Unown Text Image">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="https://img.pokemondb.net/sprites/home/normal/unown-a.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">    
+</head>
+<body>
+    <div class="icons">
+        <a href="https://github.com/JihunKimCode/Unown-Image-Generator" class="btn btn-github" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-github"></i>
+        </a>
+    </div>
+    <div class="container">
+        <h1>Unown Image Generator</h1>
+
+        <!-- Grid container -->
+        <div class="grid-container">
+            <div class="grid-item selected">
+                <img src="https://img.pokemondb.net/artwork/vector/unown-a.png" alt="artwork" title="Artwork">
+            </div>
+            <div class="grid-item">
+                <img src="https://img.pokemondb.net/sprites/home/normal/unown-a.png" alt="home" title="Home">
+            </div>
+            <div class="grid-item">
+                <img src="https://img.pokemondb.net/sprites/home/shiny/unown-a.png" alt="home shiny" title="Home Shiny">
+            </div>
+            <div class="grid-item">
+                <img src="https://img.pokemondb.net/sprites/legends-arceus/normal/unown-a.png" alt="legends-arceus" title="PLA">
+            </div>
+            <div class="grid-item">
+                <img src="https://img.pokemondb.net/sprites/legends-arceus/shiny/unown-a.png" alt="legends-arceus shiny" title="PLA Shiny">
+            </div>
+            <div class="grid-item">
+                <img src="https://img.pokemondb.net/sprites/brilliant-diamond-shining-pearl/normal/unown-a.png" alt="brilliant-diamond-shining-pearl" title="BDSP">
+            </div>
+            <div class="grid-item">
+                <img src="https://img.pokemondb.net/sprites/bank/normal/unown-a.png" alt="bank" title="Bank">
+            </div>
+            <div class="grid-item">
+                <img src="https://img.pokemondb.net/sprites/bank/shiny/unown-a.png" alt="bank shiny" title="Bank Shiny">
+            </div>
+            <div class="grid-item">
+                <img src="https://img.pokemondb.net/sprites/go/normal/unown-a.png" alt="go" title="Go">
+            </div>
+            <div class="grid-item">
+                <img src="https://img.pokemondb.net/sprites/go/shiny/unown-a.png" alt="go shiny" title="Go Shiny">
+            </div>
+            <div class="grid-item">
+                <img src="https://img.pokemondb.net/sprites/black-white/normal/unown-a.png" alt="black-white" title="BW">
+            </div>
+            <div class="grid-item">
+                <img src="https://img.pokemondb.net/sprites/black-white/shiny/unown-a.png" alt="black-white shiny" title="BW Shiny">
+            </div>
+            <div class="grid-item">
+                <img src="https://img.pokemondb.net/sprites/crystal/normal/unown-a.png" alt="crystal" title="Crystal">
+            </div>
+            <div class="grid-item">
+                <img src="https://img.pokemondb.net/sprites/crystal/shiny/unown-a.png" alt="crystal shiny" title="Crystal Shiny">
+            </div>
+        </div>
+
+        <!-- Text area for user input -->
+        <textarea id="userInput" placeholder="Enter text here..."></textarea>
+        
+        <div class="options">
+            <!-- Background Color Option -->
+            <div class="option-card">
+                <label for="background">Background Color</label>
+                <select id="background">
+                    <option value="white">White</option>
+                    <option value="black">Black</option>
+                </select>
+            </div>
+            
+            <!-- Spacing Option -->
+            <div class="option-card">
+                <label for="spacing">Spacing</label>
+                <input type="number" id="spacing" value="100" min="1">
+            </div>
+            
+            <!-- Max Line Length Option -->
+            <div class="option-card">
+                <label for="linechar">Max Line Length</label>
+                <input type="number" id="linechar" value="19" min="1">
+            </div>
+        </div>
+        
+        <button id="generate">Generate</button>
+        
+        <div id="outputContainer">
+            <canvas id="outputCanvas"></canvas>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+<footer>
+    <p>Images and data are sourced from <a href="https://pokemondb.net/" target="_blank" >Pokémon Database</a>.</p>
+    <p>© <span id="year"></span> Pokémon. ©1995 - <span id="year2"></span> Nintendo/Creatures Inc./GAME FREAK inc. TM, ®Nintendo.</p>
+</footer>
+</html>

@@ -1,0 +1,228 @@
+/* General Body Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+}
+
+/* Main Container */
+.container {
+    text-align: center;
+    width: 90%;
+    max-width: 800px;
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    flex-grow: 1; /* Allow content to take up remaining space */
+}
+
+.icons {
+    display: flex;
+    justify-content: flex-start;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+}
+
+.icons a {
+    margin-left: 10px;
+    font-size: 36px;
+    text-decoration: none;
+    color: rgb(228, 228, 228);
+}
+
+.icons a:hover{
+    color: white;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    color: #e2e2e2;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn.btn-github{
+    background-color: #000000;
+}
+
+.btn.btn-github:hover {
+    color: #fff;
+}
+
+/* Heading */
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); 
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.grid-item {
+    display: flex; 
+    justify-content: center;
+    align-items: center; 
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    background-color: #f0f0f0;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    box-sizing: border-box;
+    aspect-ratio: 1; /* Makes the width equal to the height */
+}
+
+.grid-item img {
+    max-width: 80px;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+}
+
+.grid-item:hover {
+    background-color: #ccc;
+}
+
+.grid-item.selected {
+    box-shadow: 0 0 0 2px #4894f0;
+    background-color: #e0e0e0;
+}
+
+/* Textarea for User Input */
+textarea {
+    width: 100%;
+    height: 100px;
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    resize: none;
+}
+
+/* Options Section Styling */
+.options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 20px 0;
+    text-align: left;
+}
+
+/* Individual Option Cards */
+.option-card {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.option-card label {
+    font-size: 14px;
+    color: #333;
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.option-card select, .option-card input {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.option-card input[type="number"] {
+    width: 80px;
+}
+
+/* Button Styling */
+#generate {
+    background-color: #4894f0;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+#generate:hover {
+    background-color: #3f85d5;
+}
+
+/* Output Container and Canvas Styling */
+#outputContainer {
+    margin-top: 20px;
+    position: relative;
+    overflow-x: auto;
+    border: 2px solid #ccc;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+canvas {
+    display: block;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+/* Footer Styling */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 12px;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: auto; /* Pushes the footer to the bottom */
+}
+
+/* Links in Footer */
+footer a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+footer a:hover{
+    color: #3f85d5;
+}
+
+footer p {
+    margin-block-start: 3px;
+    margin-block-end: 3px;
+}
