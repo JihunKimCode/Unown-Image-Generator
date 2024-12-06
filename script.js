@@ -119,7 +119,7 @@ document.getElementById("generate").addEventListener("click", () => {
 
             const imgSrc = charToImage[char];
             if (!imgSrc) {
-                console.warn(`No image source found for character: ${char}`);
+                console.warn(`There is no Unown Sprite for character: ${char}`);
                 return null; // Skip characters without valid sources
             }
 
@@ -129,7 +129,7 @@ document.getElementById("generate").addEventListener("click", () => {
             return new Promise((resolve) => {
                 img.onload = () => resolve({ char, img });
                 img.onerror = () => {
-                    console.warn(`Failed to load image for character: ${char}`);
+                    console.warn(`Failed to load Unown Sprite for character: ${char}`);
                     resolve(null);
                 };
             });
