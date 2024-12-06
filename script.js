@@ -116,8 +116,16 @@ document.getElementById("generate").addEventListener("click", () => {
     const promises = textLines.flatMap((line) =>
         [...line].map((char) => {
             if (char === " ") return null; // Skip spaces (handled separately)
+
+            const imgSrc = charToImage[char];
+            if (!imgSrc) {
+                console.warn(`No image source found for character: ${char}`);
+                return null; // Skip characters without valid sources
+            }
+
             const img = new Image();
-            img.src = charToImage[char] || charToImage["?"]; // Default to '?' if not found
+            img.src = imgSrc;
+
             return new Promise((resolve) => {
                 img.onload = () => resolve({ char, img });
                 img.onerror = () => {
@@ -126,7 +134,7 @@ document.getElementById("generate").addEventListener("click", () => {
                 };
             });
         })
-    );
+    ).filter(Boolean); // Remove null entries from the array
 
     Promise.all(promises.filter(Boolean))
         .then((results) => {
