@@ -78,116 +78,114 @@ setupGridItemListeners();
 document.getElementById("generate").addEventListener("click", () => {
     const inputText = document.getElementById("userInput").value.toUpperCase();
     if (inputText.trim() === "") return;
-    
+
     const spacing = 5;
     const backgroundColor = document.getElementById("background").value;
     const linechar = parseInt(document.getElementById("linechar").value, 10);
-    
-    // Create a small transparent space image to replicate the Python code behavior
+
+    // Create a small transparent space image to handle spaces
     const spaceImage = document.createElement("canvas");
     spaceImage.width = parseInt(document.getElementById("spacing").value, 10);
     spaceImage.height = 10;
     const spaceCtx = spaceImage.getContext("2d");
-    spaceCtx.fillStyle = "rgba(0, 0, 0, 0)";  // Transparent
+    spaceCtx.fillStyle = "rgba(0, 0, 0, 0)"; // Transparent
     spaceCtx.fillRect(0, 0, spaceImage.width, spaceImage.height);
 
     const canvas = document.getElementById("outputCanvas");
     const ctx = canvas.getContext("2d");
 
-    // Normalize the text (convert to uppercase and filter valid characters)
-    const normalizedText = [...inputText].filter(
-        (char) => charToImage[char] || char === " "
-    );
+    // Normalize text: split into lines by explicit line breaks, then wrap to `linechar`
+    const textLines = inputText.split("\n").flatMap((paragraph) => {
+        let lines = [];
+        let currentLine = "";
 
-    // Split the text into lines based on max length
-    let lines = [];
-    let currentLine = "";
-    for (let char of normalizedText) {
-        if (char === " " || currentLine.length < linechar) {
-            currentLine += char;
-        } else {
-            lines.push(currentLine);
-            currentLine = char;
+        for (let char of paragraph) {
+            if (currentLine.length < linechar && char !== "\n") {
+                currentLine += char;
+            } else {
+                lines.push(currentLine);
+                currentLine = char === "\n" ? "" : char;
+            }
         }
-    }
-    if (currentLine) lines.push(currentLine);
 
-    // Preload images for each character
-    const promises = lines.flatMap((line) =>
+        if (currentLine) lines.push(currentLine);
+        return lines;
+    });
+
+    // Preload images for all characters
+    const promises = textLines.flatMap((line) =>
         [...line].map((char) => {
-            if (char === " ") return null; // Skip space characters (handle separately)
+            if (char === " ") return null; // Skip spaces (handled separately)
             const img = new Image();
             img.src = charToImage[char] || charToImage["?"]; // Default to '?' if not found
             return new Promise((resolve) => {
                 img.onload = () => resolve({ char, img });
                 img.onerror = () => {
                     console.warn(`Failed to load image for character: ${char}`);
-                    resolve(null); // Resolve with null for failed loads
+                    resolve(null);
                 };
             });
         })
     );
 
-    Promise.all(promises.filter(Boolean)) // Filter out null promises (spaces or failed images)
+    Promise.all(promises.filter(Boolean))
         .then((results) => {
-            // Remove nulls from results to handle only successfully loaded images
             const validResults = results.filter((res) => res !== null);
 
-            // Prepare canvas dimensions
+            // Calculate dimensions
             const lineHeights = [];
             let totalHeight = 0;
             let totalWidth = 0;
 
-            lines.forEach((line) => {
+            textLines.forEach((line) => {
                 let lineWidth = 0;
                 let lineHeight = 0;
 
                 [...line].forEach((char) => {
                     if (char === " ") {
-                        lineWidth += spaceImage.width + spacing;            // Space width + spacing for space
+                        lineWidth += spaceImage.width + spacing;
                     } else {
                         const result = validResults.find((res) => res && res.char === char);
                         if (result) {
-                            const { img } = result;
-                            lineWidth += img.width + spacing;               // Image width + spacing
-                            lineHeight = Math.max(lineHeight, img.height);  // Keep the max height in a line
+                            lineWidth += result.img.width + spacing;
+                            lineHeight = Math.max(lineHeight, result.img.height);
                         }
                     }
                 });
 
-                lineHeights.push(lineHeight);                   // Store the height for the line
-                totalWidth = Math.max(totalWidth, lineWidth);   // Max width across all lines
-                totalHeight += lineHeight + spacing;            // Total height including spacing between lines
+                lineHeights.push(lineHeight);
+                totalWidth = Math.max(totalWidth, lineWidth);
+                totalHeight += lineHeight + spacing;
             });
 
             // Set canvas dimensions
             canvas.width = totalWidth;
             canvas.height = totalHeight;
 
-            // Draw on canvas with the specified background color
+            // Draw background
             ctx.fillStyle = backgroundColor;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+            // Render text on canvas
             let yOffset = 0;
-            lines.forEach((line, lineIndex) => {
+            textLines.forEach((line, lineIndex) => {
                 let xOffset = 0;
                 [...line].forEach((char) => {
                     if (char === " ") {
-                        ctx.drawImage(spaceImage, xOffset, yOffset);// Draw the transparent space
-                        xOffset += spaceImage.width + spacing;      // Add space width + spacing
+                        ctx.drawImage(spaceImage, xOffset, yOffset);
+                        xOffset += spaceImage.width + spacing;
                     } else {
                         const result = validResults.find((res) => res && res.char === char);
                         if (result) {
-                            const { img } = result;
-                            ctx.drawImage(img, xOffset, yOffset);   // Draw the image at calculated offset
-                            xOffset += img.width + spacing;         // Add space after the image
+                            ctx.drawImage(result.img, xOffset, yOffset);
+                            xOffset += result.img.width + spacing;
                         }
                     }
                 });
-                yOffset += lineHeights[lineIndex] + spacing;        // Move down for the next line
+                yOffset += lineHeights[lineIndex] + spacing;
             });
         })
-    .catch((error) => {
-        console.error("Error processing images:", error);
-    });
+        .catch((error) => {
+            console.error("Error processing images:", error);
+        });
 });
