@@ -133,7 +133,7 @@ textarea {
 /* Options Section Styling */
 .options {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
     margin: 20px 0;
     text-align: left;
